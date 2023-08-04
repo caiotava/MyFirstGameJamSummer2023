@@ -34,12 +34,6 @@ public class ResourceManager : MonoBehaviour
         RefreshUIControls();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void RefreshUIControls()
     {
         goldDisplay.SetAmount(totalGold);
@@ -111,5 +105,38 @@ public class ResourceManager : MonoBehaviour
         }
 
         return total;
+    }
+
+    public void AddGold(uint amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        totalGold += amount;
+        RefreshUIControls();
+    }
+
+    public void AddMetal(uint amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        totalMetal += amount;
+        RefreshUIControls();
+    }
+
+    public void AddWood(uint amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        totalWood += amount;
+        RefreshUIControls();
     }
 }
