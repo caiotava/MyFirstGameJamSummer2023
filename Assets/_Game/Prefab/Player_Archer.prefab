@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 33b12ce0097232148b804dba6c9d8ebe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.97, y: 3.4}
@@ -178,9 +178,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6082267176726764507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cba36bf7725ac14aa44d08279d1ff45, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d14a3f48a29a254ca6836db23653a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  force: 5
 --- !u!70 &4342924239047808655
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -15,11 +15,11 @@ public class BulletTarget : MonoBehaviour
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        enemy = FindObjectsOfType<Enemy>();
+        
           player = FindAnyObjectByType<Player>();
     }
      public void Update() {
-        
+        enemy = FindObjectsOfType<Enemy>();
          for(int i = 0; i < enemy.Count(); i++){
             if(enemy[i] == null ) return;
             if(player == null) return;

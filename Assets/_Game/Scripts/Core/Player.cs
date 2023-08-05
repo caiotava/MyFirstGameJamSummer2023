@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {   
+        
+        StartCoroutine(EnemyComponent());
         timeSinceLastAttack += Time.deltaTime;
         if(enemy == null)return;
         else{
@@ -37,6 +39,13 @@ public class Player : MonoBehaviour
         }
         }
         
+    }
+    IEnumerator EnemyComponent(){
+        yield return new WaitForSeconds(5);
+        enemy = FindObjectsOfType<Enemy>();
+        yield return new WaitForSeconds(3);
+        StartCoroutine(EnemyComponent());
+
     }
 
      private void PlayerAttack(int i)
