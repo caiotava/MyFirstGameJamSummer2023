@@ -179,9 +179,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7530586985014592609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cba36bf7725ac14aa44d08279d1ff45, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d14a3f48a29a254ca6836db23653a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  force: 5
 --- !u!70 &7882144094673801345
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

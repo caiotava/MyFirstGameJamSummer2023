@@ -13,19 +13,21 @@ public class Projectile : MonoBehaviour
 
     public void Start()
     {
-        enemy = FindObjectsOfType<Enemy>();
+       
           player = FindAnyObjectByType<Player>();
     }
 
     public void FixedUpdate()
+    
     {
+         enemy = FindObjectsOfType<Enemy>();
         for(int i = 0; i < enemy.Length; i++){
             BulletInstantiate(i);
         }
         
     }
 
-    private void BulletInstantiate(int i)
+    public void BulletInstantiate(int i)
     {
         if (enemy[i] == null) return;
 
