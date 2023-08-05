@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.637004, y: 0.15969259, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5100905, y: 0.57627803, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 155731897
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3f44a8b84164183419024a64bb848c04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -101,7 +101,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 32cb0a8b851d16e4f8584326d9fdb351, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -124,8 +124,8 @@ MonoBehaviour:
   ischasing: 0
   speed: 2
   isInRange: 2
-  health: 100
-  EnemyDamage: 3
+  health: 3000
+  EnemyDamage: 100
 --- !u!50 &5958215906080090796
 Rigidbody2D:
   serializedVersion: 4
@@ -150,9 +150,9 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!70 &620879863161728379
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -182,9 +182,9 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.99, y: 3.58}
+  m_Offset: {x: -0.119571686, y: -0.015178442}
+  m_Size: {x: 3.0452347, y: 3.4435816}
   m_Direction: 0

@@ -14,10 +14,11 @@ GameObject:
   - component: {fileID: 2769848234794452949}
   - component: {fileID: 6640559661889312794}
   - component: {fileID: 342863902595328495}
+  - component: {fileID: 5775828209992825979}
   - component: {fileID: 4342924239047808655}
   m_Layer: 0
   m_Name: Player_Archer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,8 +76,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 155731897
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 33b12ce0097232148b804dba6c9d8ebe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -139,9 +140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1682408311708078829, guid: b645d93c1a3b74d42afb7b1bc736da1c, type: 3}
-  nextFireTime: 0
   fireRate: 0.5
-  force: 0
+  DestroyTime: 3
 --- !u!50 &342863902595328495
 Rigidbody2D:
   serializedVersion: 4
@@ -168,7 +168,19 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
+--- !u!114 &5775828209992825979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6082267176726764507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cba36bf7725ac14aa44d08279d1ff45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &4342924239047808655
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -198,7 +210,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

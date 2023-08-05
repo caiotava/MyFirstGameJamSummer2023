@@ -4,38 +4,42 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    Enemy enemy;
+    Enemy[] enemy;
     Player player;
-   
     public GameObject  Prefab;
-
-    
-    public float nextFireTime;
+    float nextFireTime;
     public float fireRate = 2f;
-    public float force;
-    
+    public float DestroyTime = 1f;
 
     public void Start()
     {
-        enemy = FindAnyObjectByType<Enemy>();
+        enemy = FindObjectsOfType<Enemy>();
           player = FindAnyObjectByType<Player>();
     }
 
     public void FixedUpdate()
     {
-        if(enemy == null) return;
-       
-        if((Vector2.Distance(transform.position, enemy.transform.position )<= player.Range && nextFireTime <= Time.time)){
-            var bullet =Instantiate(Prefab,transform.position, Quaternion.identity);
-            nextFireTime = Time.time + fireRate;
-            Destroy(bullet, 1f);
-
-        }   
+        for(int i = 0; i < enemy.Length; i++){
+            BulletInstantiate(i);
+        }
+        
     }
-   
-  
+
+    private void BulletInstantiate(int i)
+    {
+        if (enemy[i] == null) return;
+
+        if ((Vector2.Distance(transform.position, enemy[i].transform.position) <= player.Range && nextFireTime <= Time.time))
+        {
+            var bullet = Instantiate(Prefab, transform.position, Quaternion.identity);
+            nextFireTime = Time.time + fireRate;
+            Destroy(bullet, DestroyTime);
+
+        }
+    }
 
 
-    
- }
+
+
+}
 

@@ -52,12 +52,15 @@ using UnityEngine;
         if((Vector2.Distance(transform.position, player[i].transform.position )> isInRange)){
             MoveToPlayer(i);
             myAnimation.SetBool("walk", true);
-            ischasing = true;
+          
           
             }
             if(Vector2.Distance(transform.position, player[i].transform.position )< isInRange)
         {
+            
+
             Attack(i); 
+
            
         }
          if(player[i].health == 0)
@@ -69,8 +72,9 @@ using UnityEngine;
 
     private void Attack(int i)
     {
-        ischasing = false;
+        
         myAnimation.SetBool("walk", false);
+        
 
         if (timeSinceLastAttack > timeBetweenattacks)
         {

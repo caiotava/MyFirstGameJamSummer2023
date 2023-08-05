@@ -13,13 +13,11 @@ public class Player : MonoBehaviour
     
 
     public float Range = 2f;
-    
     public int PlayerDamage = 5;
     public float timeBetweenattacks = 1f;
-    float timeSinceLastAttack = 0f;
     public float health = 100;
     
-
+    float timeSinceLastAttack = 0f;
     // Start is called before the first frame update
     public void Awake()
     {
@@ -51,14 +49,13 @@ public class Player : MonoBehaviour
             myAnimation.SetBool("Attack", true);
             enemy[i].GiveDamage(PlayerDamage);
             timeSinceLastAttack = 0;
-            print(i);
         }}
          if(enemy[i].health <= 0)
           { 
             myAnimation.SetBool("Attack",false);
            }
         }
-        print(i);
+        
        
         
 
