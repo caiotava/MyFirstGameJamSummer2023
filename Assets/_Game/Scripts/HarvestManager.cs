@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HarvestManager : MonoBehaviour
@@ -13,14 +12,6 @@ public class HarvestManager : MonoBehaviour
     [SerializeField] private uint collectGold = 10;
     [SerializeField] private uint collectMetal = 10;
     [SerializeField] private uint collectWood = 10;
-    
-    // Start is called before the first frame update
-    private void Start()
-    {
-        StartCoroutine(harvestRoutine(speedHarvestGold, collectGold, resourceManager.AddGold));
-        StartCoroutine(harvestRoutine(speedHarvestMetal, collectMetal, resourceManager.AddMetal));
-        StartCoroutine(harvestRoutine(speedHarvestWood, collectWood, resourceManager.AddWood));
-    }
 
     private static IEnumerator harvestRoutine(float speedHarvest, uint amount, Action<uint> setResourceCallback)
     {
@@ -31,5 +22,17 @@ public class HarvestManager : MonoBehaviour
 
             setResourceCallback(amount);
         }
+    }
+
+    public void StartHarvest()
+    {
+        StartCoroutine(harvestRoutine(speedHarvestGold, collectGold, resourceManager.AddGold));
+        StartCoroutine(harvestRoutine(speedHarvestMetal, collectMetal, resourceManager.AddMetal));
+        StartCoroutine(harvestRoutine(speedHarvestWood, collectWood, resourceManager.AddWood));
+    }
+
+    public void StopHarvest()
+    {
+        StopAllCoroutines();
     }
 }

@@ -13,12 +13,6 @@ public class TimerDisplay : MonoBehaviour
 
     public UnityEvent OnTimerEnd;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        StartTimer(duration);
-    }
-
     public void StartTimer(float seconds)
     {
         remainDuration = 0;

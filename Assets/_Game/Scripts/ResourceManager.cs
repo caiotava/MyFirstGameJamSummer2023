@@ -26,7 +26,7 @@ public class ResourceManager : MonoBehaviour
     private Dictionary<UnitStats, uint> totalSupplyByUnitStats = new();
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         totalGold = initialGold;
         totalMetal = initialMetal;
