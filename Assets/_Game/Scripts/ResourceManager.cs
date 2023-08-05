@@ -12,18 +12,19 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] private uint initialWood = 200;
     [SerializeField] private uint maxSupply = 100;
 
-    [Header("UI Resources")] 
-    [SerializeField] private ResourceDisplay goldDisplay;
+    [Header("UI Resources")] [SerializeField]
+    private ResourceDisplay goldDisplay;
+
     [SerializeField] private ResourceDisplay metalDisplay;
     [SerializeField] private ResourceDisplay woodDisplay;
     [SerializeField] private ResourceDisplay supplyDisplay;
     [SerializeField] private QueueDisplay queueDisplay;
-    
+
     private uint totalGold;
     private uint totalMetal;
     private uint totalWood;
     private Dictionary<UnitStats, uint> totalSupplyByUnitStats = new();
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +42,9 @@ public class ResourceManager : MonoBehaviour
         woodDisplay.SetAmount(totalWood);
         supplyDisplay.SetAmount($"{totalSupply():D3}/{maxSupply:D3}");
     }
-    
-    public bool PayBuildCosts(UnitStats unitStats) {
+
+    public bool PayBuildCosts(UnitStats unitStats)
+    {
         if (!HasEnoughResourceToBuild(unitStats))
         {
             return false;
@@ -54,24 +56,46 @@ public class ResourceManager : MonoBehaviour
 
         totalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
         totalSupplyByUnitStats[unitStats] = totalUnitsByType + unitStats.Supply;
-        
+
         RefreshUIControls();
-        
+
         return true;
     }
-    
+
+    public void RefundBuildCosts(UnitStats unitStats)
+    {
+        totalGold += unitStats.GoldCost;
+        totalMetal += unitStats.MetalCost;
+        totalWood += unitStats.WoodCost;
+
+        totalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
+        totalSupplyByUnitStats[unitStats] = totalUnitsByType - unitStats.Supply;
+
+        RefreshUIControls();
+    }
+
     public bool HasEnoughResourceToBuild(UnitStats unitStats)
     {
-        return unitStats.GoldCost <= totalGold && 
+        return unitStats.GoldCost <= totalGold &&
                unitStats.MetalCost <= totalMetal &&
                unitStats.WoodCost <= totalWood &&
                totalSupply() + unitStats.Supply <= maxSupply;
     }
-    
+
     public void OnBuildQueued(UnitStats unitStats)
     {
     }
-    
+
+    public void OnBuildCancelled(UnitStats unitStats, List<BuildManager.BuildData> queuedUnits)
+    {
+        if (unitStats is not null)
+        {
+            RefundBuildCosts(unitStats);
+        }
+
+        queueDisplay.UpdateControls(unitStats, 0, queuedUnits);
+    }
+
     public void OnBuildCompleted(UnitStats unitStats, List<BuildManager.BuildData> queuedUnits)
     {
         if (queuedUnits.Count == 0)
@@ -79,7 +103,7 @@ public class ResourceManager : MonoBehaviour
             queueDisplay.UpdateControls(null, 0, queuedUnits);
         }
     }
-    
+
     public void OnBuildTick(UnitStats unitStats, float percentage, List<BuildManager.BuildData> queuedUnits)
     {
         queueDisplay.UpdateControls(unitStats, percentage, queuedUnits);
@@ -98,7 +122,7 @@ public class ResourceManager : MonoBehaviour
     private uint totalSupply()
     {
         uint total = 0;
-        
+
         foreach (var supply in totalSupplyByUnitStats)
         {
             total += supply.Value;

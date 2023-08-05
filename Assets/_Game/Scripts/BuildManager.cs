@@ -7,7 +7,7 @@ public class BuildManager : MonoBehaviour
 {
     public class BuildData
     {
-        public UnitStats ObjectBeingBuilt {  get; private set; }
+        public UnitStats ObjectBeingBuilt { get; private set; }
         public float CurrentBuildProgress { get; private set; }
 
         public BuildData(UnitStats objectBeingBuilt)
@@ -23,7 +23,7 @@ public class BuildManager : MonoBehaviour
             return CurrentBuildProgress >= 1.0f;
         }
     }
-    
+
     [SerializeField] private int QueueSizeLimit = 5;
     [SerializeField] private int GlobalBuildLimit = 100;
     [SerializeField] private ResourceManager resourceManager;
@@ -34,10 +34,11 @@ public class BuildManager : MonoBehaviour
     [SerializeField] UnityEvent<UnitStats, float, List<BuildData>> OnBuildTick = new();
     [SerializeField] UnityEvent<UnitStats> OnNotEnoughResources = new();
     [SerializeField] UnityEvent<UnitStats> OnBuildQueuedLimitSize = new();
+    [SerializeField] UnityEvent<UnitStats, List<BuildData>> OnBuildCancelled = new();
 
     private readonly Queue<BuildData> buildQueue = new();
     private BuildData activeBuildData { get; set; }
-    
+
     public bool Enqueue(UnitStats unitStats)
     {
         if (buildQueue.Count >= QueueSizeLimit)
@@ -51,7 +52,7 @@ public class BuildManager : MonoBehaviour
             OnNotEnoughResources.Invoke(unitStats);
             return false;
         }
-        
+
         buildQueue.Enqueue(new BuildData(unitStats));
         OnBuildQueued.Invoke(unitStats);
         return true;
@@ -75,8 +76,8 @@ public class BuildManager : MonoBehaviour
         if (buildQueue.Count <= 0 && activeBuildData == null)
         {
             return;
-        } 
-        
+        }
+
         activeBuildData ??= buildQueue.Dequeue();
 
         if (activeBuildData == null)
@@ -86,11 +87,28 @@ public class BuildManager : MonoBehaviour
 
         if (!activeBuildData.Tick(Time.deltaTime))
         {
-            OnBuildTick.Invoke(activeBuildData.ObjectBeingBuilt, activeBuildData.CurrentBuildProgress, HeadQueueItems());
+            OnBuildTick.Invoke(activeBuildData.ObjectBeingBuilt, activeBuildData.CurrentBuildProgress,
+                HeadQueueItems());
             return;
         }
-        
+
         OnBuildCompleted.Invoke(activeBuildData.ObjectBeingBuilt, HeadQueueItems());
         activeBuildData = null;
+    }
+
+    public void StopAllBuildQueues()
+    {
+        while (buildQueue.Count > 0)
+        {
+            OnBuildCancelled.Invoke(buildQueue.Dequeue().ObjectBeingBuilt, HeadQueueItems());
+        }
+
+        if (activeBuildData is not null)
+        {
+            resourceManager.RefundBuildCosts(activeBuildData.ObjectBeingBuilt);
+            activeBuildData = null;
+        }
+
+        OnBuildCancelled.Invoke(null, HeadQueueItems());
     }
 }
