@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class CycleManager : MonoBehaviour
 {
-    [SerializeField] private TimerDisplay timerDisplay;
-    [SerializeField] private HarvestManager harvestManager;
-    [SerializeField] private BuildManager buildManager;
     [SerializeField] private float cycleDuration;
     [SerializeField] private List<GameObject> uiControlsBuildPhase;
+
+    [Header("Managers")] [SerializeField] private TimerDisplay timerDisplay;
+    [SerializeField] private HarvestManager harvestManager;
+    [SerializeField] private BuildManager buildManager;
+    [SerializeField] private SpawnManager spawnManager;
+    [SerializeField] private PlayerUnitsManager playerUnitsManager;
+    [SerializeField] private ResourceManager resourceManager;
 
     public void Start()
     {
@@ -31,6 +35,8 @@ public class CycleManager : MonoBehaviour
         harvestManager.StopHarvest();
         buildManager.StopAllBuildQueues();
         SetActiveBuildControls(false);
+        playerUnitsManager.SpawnPlayerUnities(resourceManager.TotalSupplyByUnitStats);
+        spawnManager.StartSpawn();
     }
 
     private void SetActiveBuildControls(bool active)

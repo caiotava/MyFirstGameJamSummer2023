@@ -13,6 +13,13 @@ public class HarvestManager : MonoBehaviour
     [SerializeField] private uint collectMetal = 10;
     [SerializeField] private uint collectWood = 10;
 
+    public void StartHarvest()
+    {
+        StartCoroutine(harvestRoutine(speedHarvestGold, collectGold, resourceManager.AddGold));
+        StartCoroutine(harvestRoutine(speedHarvestMetal, collectMetal, resourceManager.AddMetal));
+        StartCoroutine(harvestRoutine(speedHarvestWood, collectWood, resourceManager.AddWood));
+    }
+
     private static IEnumerator harvestRoutine(float speedHarvest, uint amount, Action<uint> setResourceCallback)
     {
         var waitTime = new WaitForSeconds(speedHarvest);
@@ -22,13 +29,6 @@ public class HarvestManager : MonoBehaviour
 
             setResourceCallback(amount);
         }
-    }
-
-    public void StartHarvest()
-    {
-        StartCoroutine(harvestRoutine(speedHarvestGold, collectGold, resourceManager.AddGold));
-        StartCoroutine(harvestRoutine(speedHarvestMetal, collectMetal, resourceManager.AddMetal));
-        StartCoroutine(harvestRoutine(speedHarvestWood, collectWood, resourceManager.AddWood));
     }
 
     public void StopHarvest()

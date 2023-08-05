@@ -13,4 +13,5 @@ public class UnitStats : ScriptableObject
     public float AttackSpeed;
     public uint Supply;
     public Sprite Image;
+    public GameObject unitPrefab;
 }

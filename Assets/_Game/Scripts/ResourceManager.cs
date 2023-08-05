@@ -23,7 +23,7 @@ public class ResourceManager : MonoBehaviour
     private uint totalGold;
     private uint totalMetal;
     private uint totalWood;
-    private Dictionary<UnitStats, uint> totalSupplyByUnitStats = new();
+    public Dictionary<UnitStats, uint> TotalSupplyByUnitStats { get; private set; } = new();
 
     // Start is called before the first frame update
     private void Start()
@@ -54,8 +54,8 @@ public class ResourceManager : MonoBehaviour
         totalMetal -= unitStats.MetalCost;
         totalWood -= unitStats.WoodCost;
 
-        totalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
-        totalSupplyByUnitStats[unitStats] = totalUnitsByType + unitStats.Supply;
+        TotalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
+        TotalSupplyByUnitStats[unitStats] = totalUnitsByType + unitStats.Supply;
 
         RefreshUIControls();
 
@@ -68,8 +68,8 @@ public class ResourceManager : MonoBehaviour
         totalMetal += unitStats.MetalCost;
         totalWood += unitStats.WoodCost;
 
-        totalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
-        totalSupplyByUnitStats[unitStats] = totalUnitsByType - unitStats.Supply;
+        TotalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
+        TotalSupplyByUnitStats[unitStats] = totalUnitsByType - unitStats.Supply;
 
         RefreshUIControls();
     }
@@ -123,7 +123,7 @@ public class ResourceManager : MonoBehaviour
     {
         uint total = 0;
 
-        foreach (var supply in totalSupplyByUnitStats)
+        foreach (var supply in TotalSupplyByUnitStats)
         {
             total += supply.Value;
         }

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cce1e3fba0d77c345ae25f7ed151e9e8, type: 3}
-  m_Name: UnitStatsArcher
+  m_Name: UnitStatsEnemy
   m_EditorClassIdentifier: 
-  GoldCost: 300
-  MetalCost: 50
-  WoodCost: 150
-  BuildTime: 4.5
-  Health: 200
-  Attack: 40
-  Defense: 10
-  AttackSpeed: 10
-  Supply: 4
-  Image: {fileID: 21300000, guid: 330bdd51feecc6e4ebd5e39493be31b3, type: 3}
-  unitPrefab: {fileID: 6082267176726764507, guid: 0fc8af3ad8df81d4aa2ee5ffb6d25c58, type: 3}
+  GoldCost: 0
+  MetalCost: 0
+  WoodCost: 0
+  BuildTime: 0
+  Health: 0
+  Attack: 5
+  Defense: 4
+  AttackSpeed: 3
+  Supply: 0
+  Image: {fileID: 0}
+  unitPrefab: {fileID: 9123476737414042338, guid: 4a362e6b7cbefb445800df10a90c4ca7, type: 3}

@@ -7,8 +7,8 @@ public class TimerDisplay : MonoBehaviour
 {
     [SerializeField] private Image imageFill;
     [SerializeField] private Text timerText;
-    [SerializeField] private float duration;
 
+    private float duration;
     private float remainDuration;
 
     public UnityEvent OnTimerEnd;
@@ -16,6 +16,7 @@ public class TimerDisplay : MonoBehaviour
     public void StartTimer(float seconds)
     {
         remainDuration = 0;
+        duration = seconds;
         StartCoroutine(TimerRoutine());
     }
 
