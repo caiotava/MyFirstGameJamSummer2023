@@ -21,15 +21,13 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     public void Awake()
     {
-   
-        enemy = FindObjectsOfType<Enemy>();
+
         myAnimation = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     public void Update()
     {   
-        
         StartCoroutine(EnemyComponent());
         timeSinceLastAttack += Time.deltaTime;
         if(enemy == null)return;
@@ -41,7 +39,7 @@ public class Player : MonoBehaviour
         
     }
     IEnumerator EnemyComponent(){
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         enemy = FindObjectsOfType<Enemy>();
         yield return new WaitForSeconds(3);
         StartCoroutine(EnemyComponent());

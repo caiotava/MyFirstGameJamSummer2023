@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2769848234794452949}
   - component: {fileID: 6640559661889312794}
   - component: {fileID: 342863902595328495}
-  - component: {fileID: 5775828209992825979}
   - component: {fileID: 4342924239047808655}
   m_Layer: 0
   m_Name: Player_Archer
@@ -169,19 +168,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &5775828209992825979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6082267176726764507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d14a3f48a29a254ca6836db23653a01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 5
 --- !u!70 &4342924239047808655
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
