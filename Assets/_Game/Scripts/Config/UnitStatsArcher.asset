@@ -15,7 +15,7 @@ MonoBehaviour:
   GoldCost: 300
   MetalCost: 50
   WoodCost: 150
-  BuildTime: 4.5
+  BuildTime: 2
   Health: 200
   Attack: 40
   Defense: 10

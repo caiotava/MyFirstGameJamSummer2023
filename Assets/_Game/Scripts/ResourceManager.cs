@@ -55,7 +55,7 @@ public class ResourceManager : MonoBehaviour
         totalWood -= unitStats.WoodCost;
 
         TotalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
-        TotalSupplyByUnitStats[unitStats] = totalUnitsByType + unitStats.Supply;
+        TotalSupplyByUnitStats[unitStats] = totalUnitsByType + 1;
 
         RefreshUIControls();
 
@@ -69,7 +69,7 @@ public class ResourceManager : MonoBehaviour
         totalWood += unitStats.WoodCost;
 
         TotalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
-        TotalSupplyByUnitStats[unitStats] = totalUnitsByType - unitStats.Supply;
+        TotalSupplyByUnitStats[unitStats] = totalUnitsByType - 1;
 
         RefreshUIControls();
     }
@@ -125,7 +125,7 @@ public class ResourceManager : MonoBehaviour
 
         foreach (var supply in TotalSupplyByUnitStats)
         {
-            total += supply.Value;
+            total += (supply.Key.Supply * supply.Value);
         }
 
         return total;

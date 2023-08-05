@@ -5364,7 +5364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdab723b94df7a4e9c19846e7626387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cycleDuration: 60
+  cycleDuration: 15
   uiControlsBuildPhase:
   - {fileID: 1954109633}
   timerDisplay: {fileID: 1938806113}
@@ -7048,7 +7048,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageFill: {fileID: 663279538}
   timerText: {fileID: 728244878}
-  duration: 10
   OnTimerEnd:
     m_PersistentCalls:
       m_Calls: []
