@@ -9,6 +9,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject enemiesGroup;
     [SerializeField] private float spawnIntervalMin;
     [SerializeField] private float spawnIntervalMax;
+    [SerializeField] private float maxEnemiesToSpawn = 10;
 
     public void StartSpawn()
     {
@@ -17,7 +18,7 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator spawnEnemyRountine()
     {
-        while (true)
+        while (enemiesGroup.transform.childCount <= maxEnemiesToSpawn)
         {
             yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
 
