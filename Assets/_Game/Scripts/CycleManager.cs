@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CycleManager : MonoBehaviour
 {
-    [SerializeField] private float cycleDuration;
+    [SerializeField] private float cycleDurationBuild;
+    [SerializeField] private float cycleDurationBattle;
     [SerializeField] private List<GameObject> uiControlsBuildPhase;
 
     [Header("Managers")] [SerializeField] private TimerDisplay timerDisplay;
@@ -17,26 +19,46 @@ public class CycleManager : MonoBehaviour
 
     public void Start()
     {
-        StartNewCycle();
+        StartNewCycleBuild();
     }
 
-    public void StartNewCycle()
+    public void StartNewCycleBuild()
     {
-        harvestManager.StartHarvest();
+        timerDisplay.OnTimerEnd.RemoveAllListeners();
+        timerDisplay.StartTimer(cycleDurationBuild);
+        timerDisplay.OnTimerEnd.AddListener(OnEndOfCycleBuild);
 
-        timerDisplay.StartTimer(cycleDuration);
-        timerDisplay.OnTimerEnd.AddListener(OnEndOfCycle);
+        harvestManager.StartHarvest();
 
         SetActiveBuildControls(true);
     }
 
-    private void OnEndOfCycle()
+    public void StartNewCycleBattle()
     {
-        harvestManager.StopHarvest();
-        buildManager.StopAllBuildQueues();
+        timerDisplay.OnTimerEnd.RemoveAllListeners();
+        timerDisplay.StartTimer(cycleDurationBattle);
+        timerDisplay.OnTimerEnd.AddListener(OnEndOfCycleBattle);
+
         SetActiveBuildControls(false);
         playerUnitsManager.SpawnPlayerUnities(resourceManager.TotalSupplyByUnitStats);
         spawnManager.StartSpawn();
+    }
+
+    private void OnEndOfCycleBuild()
+    {
+        harvestManager.StopHarvest();
+        buildManager.StopAllBuildQueues();
+
+        StartNewCycleBattle();
+    }
+
+    private void OnEndOfCycleBattle()
+    {
+        playerUnitsManager.ClearAllUnities();
+        spawnManager.ClearAllUnities();
+        spawnManager.StopAllCoroutines();
+
+        StartNewCycleBuild();
     }
 
     private void SetActiveBuildControls(bool active)

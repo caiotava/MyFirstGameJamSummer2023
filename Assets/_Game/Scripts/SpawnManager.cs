@@ -25,4 +25,12 @@ public class SpawnManager : MonoBehaviour
             Instantiate(unitEnemy.unitPrefab, position.transform.position, Quaternion.identity, enemiesGroup.transform);
         }
     }
+
+    public void ClearAllUnities()
+    {
+        foreach (Transform child in enemiesGroup.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 }

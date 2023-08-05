@@ -154,7 +154,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 30
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -168,7 +168,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!70 &7882144094673801345
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -258,6 +258,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1944517560628657061, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532648285852714056, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
+      propertyPath: m_Radius
+      value: 2.0351305
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532648285852714056, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.042617943
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532648285852714056, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.25211844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532648285852714056, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6027500847491611837, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}

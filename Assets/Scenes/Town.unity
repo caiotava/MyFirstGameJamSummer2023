@@ -5114,9 +5114,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdab723b94df7a4e9c19846e7626387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cycleDuration: 15
+  cycleDurationBuild: 10
+  cycleDurationBattle: 20
   uiControlsBuildPhase:
-  - {fileID: 1954109633}
+  - {fileID: 901942250}
+  - {fileID: 2106478672}
+  - {fileID: 2106478672}
+  - {fileID: 706899926}
   timerDisplay: {fileID: 1938806113}
   harvestManager: {fileID: 662121340}
   buildManager: {fileID: 2103781766}

@@ -32,4 +32,12 @@ public class PlayerUnitsManager : MonoBehaviour
             }
         }
     }
+
+    public void ClearAllUnities()
+    {
+        foreach (Transform child in playerUnitsGroup.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 }
