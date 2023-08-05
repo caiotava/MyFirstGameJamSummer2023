@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7192030851824225831}
   - component: {fileID: 7019725635045701418}
   - component: {fileID: 4970980453296734786}
-  - component: {fileID: 8145735637243630318}
   - component: {fileID: 7882144094673801345}
   m_Layer: 0
   m_Name: Player_Mage
@@ -33,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.88, y: 1.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5020405, y: 0.55243033, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3674983802906242390}
@@ -141,8 +140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1418475511506330247, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
-  fireRate: 3.5
-  DestroyTime: 3
+  fireRate: 2.9
+  DestroyTime: 2
 --- !u!50 &4970980453296734786
 Rigidbody2D:
   serializedVersion: 4
@@ -159,7 +158,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 70d08b7519453c042b0e7602c7c3eafc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -167,22 +166,9 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &8145735637243630318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7530586985014592609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d14a3f48a29a254ca6836db23653a01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 5
 --- !u!70 &7882144094673801345
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -212,7 +198,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
