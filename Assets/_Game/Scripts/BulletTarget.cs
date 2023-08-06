@@ -1,32 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BulletTarget : MonoBehaviour
 {
-    
-    Enemy[] enemy;
-    Player player;
-    Vector3 targetpos;
     public float force = 5f;
-    Rigidbody2D rb;
+
+    private Enemy[] enemy;
+    private Player player;
+    private Rigidbody2D rb;
+    private Vector3 targetpos;
 
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
-          player = FindAnyObjectByType<Player>();
+
+        player = FindAnyObjectByType<Player>();
     }
-     public void Update() {
+
+    public void Update()
+    {
         enemy = FindObjectsOfType<Enemy>();
-         for(int i = 0; i < enemy.Count(); i++){
-            if(enemy[i] == null ) return;
-            if(player == null) return;
-         targetpos = enemy[i].transform.position;
-        Vector3 direction = (targetpos  - player.transform.position);
-        rb.velocity = new Vector2(direction.x, direction.y) * force;
-         }
-      
+        for (var i = 0; i < enemy.Count(); i++)
+        {
+            if (enemy[i] is null) return;
+            if (player is null) return;
+            targetpos = enemy[i].transform.position;
+            var direction = targetpos - player.transform.position;
+            rb.velocity = new Vector2(direction.x, direction.y) * force;
+        }
     }
 }

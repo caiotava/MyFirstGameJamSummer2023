@@ -1,21 +1,18 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    Animator myAnimation;
-    Enemy[] enemy;
-
-
     public float Range = 2f;
     public int PlayerDamage = 5;
-    public float timeBetweenattacks = 1f;
+    public float timeBetweenAttacks = 1f;
     public float health = 100;
+    private Enemy[] enemy;
+    private Animator myAnimation;
 
-    float timeSinceLastAttack = 0f;
+    private float timeSinceLastAttack;
 
     // Start is called before the first frame update
     public void Awake()
@@ -28,17 +25,24 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(EnemyComponent());
         timeSinceLastAttack += Time.deltaTime;
-        if (enemy == null) return;
-        else
+        if (enemy == null)
         {
-            for (int i = 0; i < enemy.Count(); i++)
-            {
-                PlayerAttack(i);
-            }
+            return;
+        }
+
+        for (var i = 0; i < enemy.Count(); i++)
+        {
+            PlayerAttack(i);
         }
     }
 
-    IEnumerator EnemyComponent()
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, Range);
+    }
+
+    private IEnumerator EnemyComponent()
     {
         yield return new WaitForSeconds(2);
         enemy = FindObjectsOfType<Enemy>();
@@ -48,31 +52,25 @@ public class Player : MonoBehaviour
 
     private void PlayerAttack(int i)
     {
-        if (enemy != null)
+        if (enemy is null)
         {
-            if (enemy[i] == null) return;
-            if (timeSinceLastAttack > timeBetweenattacks)
-            {
-                if ((Vector2.Distance(transform.position, enemy[i].transform.position) <= Range))
-                {
-                    myAnimation.SetBool("Attack", true);
-                    enemy[i].GiveDamage(PlayerDamage);
-                    timeSinceLastAttack = 0;
-                }
-            }
+            return;
+        }
 
-            if (enemy[i].health <= 0)
+        if (timeSinceLastAttack > timeBetweenAttacks)
+        {
+            if (enemy[i] is not null && Vector2.Distance(transform.position, enemy[i].transform.position) <= Range)
             {
-                myAnimation.SetBool("Attack", false);
+                myAnimation.SetBool("Attack", true);
+                enemy[i].GiveDamage(PlayerDamage);
+                timeSinceLastAttack = 0;
             }
         }
-    }
 
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, Range);
+        if (enemy[i] is not null && enemy[i].health <= 0)
+        {
+            myAnimation.SetBool("Attack", false);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -80,7 +78,7 @@ public class Player : MonoBehaviour
         health = Mathf.Max(health - damage, 0);
         if (health == 0)
         {
-            GameObject.Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

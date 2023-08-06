@@ -1,43 +1,51 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class BuildManager : MonoBehaviour
 {
-    public class BuildData
-    {
-        public UnitStats ObjectBeingBuilt { get; private set; }
-        public float CurrentBuildProgress { get; private set; }
-
-        public BuildData(UnitStats objectBeingBuilt)
-        {
-            ObjectBeingBuilt = objectBeingBuilt;
-            CurrentBuildProgress = 0.0f;
-        }
-
-        public bool Tick(float deltaTime)
-        {
-            CurrentBuildProgress = Mathf.Clamp01(CurrentBuildProgress + (deltaTime / ObjectBeingBuilt.BuildTime));
-
-            return CurrentBuildProgress >= 1.0f;
-        }
-    }
-
     [SerializeField] private int QueueSizeLimit = 5;
     [SerializeField] private int GlobalBuildLimit = 100;
     [SerializeField] private ResourceManager resourceManager;
 
-    [SerializeField] UnityEvent<UnitStats> OnBuildQueued = new();
-    [SerializeField] UnityEvent<UnitStats> OnBuildStarted = new();
-    [SerializeField] UnityEvent<UnitStats, List<BuildData>> OnBuildCompleted = new();
-    [SerializeField] UnityEvent<UnitStats, float, List<BuildData>> OnBuildTick = new();
-    [SerializeField] UnityEvent<UnitStats> OnNotEnoughResources = new();
-    [SerializeField] UnityEvent<UnitStats> OnBuildQueuedLimitSize = new();
-    [SerializeField] UnityEvent<UnitStats, List<BuildData>> OnBuildCancelled = new();
+    [SerializeField] private UnityEvent<UnitStats> OnBuildQueued = new();
+    [SerializeField] private UnityEvent<UnitStats> OnBuildStarted = new();
+    [SerializeField] private UnityEvent<UnitStats, List<BuildData>> OnBuildCompleted = new();
+    [SerializeField] private UnityEvent<UnitStats, float, List<BuildData>> OnBuildTick = new();
+    [SerializeField] private UnityEvent<UnitStats> OnNotEnoughResources = new();
+    [SerializeField] private UnityEvent<UnitStats> OnBuildQueuedLimitSize = new();
+    [SerializeField] private UnityEvent<UnitStats, List<BuildData>> OnBuildCancelled = new();
 
     private readonly Queue<BuildData> buildQueue = new();
     private BuildData activeBuildData { get; set; }
+
+    public void Update()
+    {
+        if (buildQueue.Count <= 0 && activeBuildData == null)
+        {
+            return;
+        }
+
+        activeBuildData ??= buildQueue.Dequeue();
+
+        if (activeBuildData == null)
+        {
+            return;
+        }
+
+        if (!activeBuildData.Tick(Time.deltaTime))
+        {
+            OnBuildTick.Invoke(
+                activeBuildData.ObjectBeingBuilt,
+                activeBuildData.CurrentBuildProgress,
+                HeadQueueItems()
+            );
+            return;
+        }
+
+        OnBuildCompleted.Invoke(activeBuildData.ObjectBeingBuilt, HeadQueueItems());
+        activeBuildData = null;
+    }
 
     public bool Enqueue(UnitStats unitStats)
     {
@@ -71,31 +79,6 @@ public class BuildManager : MonoBehaviour
         return headQueue;
     }
 
-    public void Update()
-    {
-        if (buildQueue.Count <= 0 && activeBuildData == null)
-        {
-            return;
-        }
-
-        activeBuildData ??= buildQueue.Dequeue();
-
-        if (activeBuildData == null)
-        {
-            return;
-        }
-
-        if (!activeBuildData.Tick(Time.deltaTime))
-        {
-            OnBuildTick.Invoke(activeBuildData.ObjectBeingBuilt, activeBuildData.CurrentBuildProgress,
-                HeadQueueItems());
-            return;
-        }
-
-        OnBuildCompleted.Invoke(activeBuildData.ObjectBeingBuilt, HeadQueueItems());
-        activeBuildData = null;
-    }
-
     public void StopAllBuildQueues()
     {
         while (buildQueue.Count > 0)
@@ -110,5 +93,24 @@ public class BuildManager : MonoBehaviour
         }
 
         OnBuildCancelled.Invoke(null, HeadQueueItems());
+    }
+
+    public class BuildData
+    {
+        public BuildData(UnitStats objectBeingBuilt)
+        {
+            ObjectBeingBuilt = objectBeingBuilt;
+            CurrentBuildProgress = 0.0f;
+        }
+
+        public UnitStats ObjectBeingBuilt { get; }
+        public float CurrentBuildProgress { get; private set; }
+
+        public bool Tick(float deltaTime)
+        {
+            CurrentBuildProgress = Mathf.Clamp01(CurrentBuildProgress + deltaTime / ObjectBeingBuilt.BuildTime);
+
+            return CurrentBuildProgress >= 1.0f;
+        }
     }
 }

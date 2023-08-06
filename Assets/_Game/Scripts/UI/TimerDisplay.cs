@@ -8,10 +8,10 @@ public class TimerDisplay : MonoBehaviour
     [SerializeField] private Image imageFill;
     [SerializeField] private Text timerText;
 
+    public UnityEvent OnTimerEnd;
+
     private float duration;
     private float remainDuration;
-
-    public UnityEvent OnTimerEnd;
 
     public void StartTimer(float seconds)
     {

@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using Image = UnityEngine.UI.Image;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -23,7 +19,7 @@ public class ResourceManager : MonoBehaviour
     private uint totalGold;
     private uint totalMetal;
     private uint totalWood;
-    public Dictionary<UnitStats, uint> TotalSupplyByUnitStats { get; private set; } = new();
+    public Dictionary<UnitStats, uint> TotalSupplyByUnitStats { get; } = new();
 
     // Start is called before the first frame update
     private void Start()
@@ -125,7 +121,7 @@ public class ResourceManager : MonoBehaviour
 
         foreach (var supply in TotalSupplyByUnitStats)
         {
-            total += (supply.Key.Supply * supply.Value);
+            total += supply.Key.Supply * supply.Value;
         }
 
         return total;
