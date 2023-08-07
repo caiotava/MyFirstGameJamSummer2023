@@ -12,6 +12,7 @@ public class UnitStats : ScriptableObject
     public float AttackRange;
     public float AttackSpeed;
     public float Defense;
+    public float MovingSpeed;
     public uint Supply;
     public Sprite Image;
     public Unit unitObject;

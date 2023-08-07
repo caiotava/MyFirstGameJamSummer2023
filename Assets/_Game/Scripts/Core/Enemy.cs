@@ -3,25 +3,26 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Unit unit;
+    [SerializeField] public Unit unit;
 
     public bool isChasing;
-    public float speed = 2f;
-    public float isInRange = 2f;
-    public float health = 100;
-    public int EnemyDamage = 3;
     private Animator myAnimation;
     private Player[] player;
     private Rigidbody2D rb;
+
+    private float health = 100;
     private readonly float timeBetweenattacks = 1f;
     private float timeSinceLastAttack;
 
+
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
         myAnimation = GetComponent<Animator>();
         player = FindObjectsOfType<Player>();
         rb = GetComponent<Rigidbody2D>();
+
+        health = unit.unitStats.Health;
     }
 
     // Update is called once per frame
@@ -45,7 +46,7 @@ public class Enemy : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, isInRange);
+        Gizmos.DrawWireSphere(transform.position, unit.unitStats.AttackRange);
     }
 
 
@@ -57,13 +58,13 @@ public class Enemy : MonoBehaviour
                 return;
             }
 
-            if (Vector2.Distance(transform.position, player[i].transform.position) > isInRange)
+            if (Vector2.Distance(transform.position, player[i].transform.position) > unit.unitStats.AttackRange)
             {
                 MoveToPlayer(i);
                 myAnimation.SetBool("walk", true);
             }
 
-            if (Vector2.Distance(transform.position, player[i].transform.position) < isInRange)
+            if (Vector2.Distance(transform.position, player[i].transform.position) < unit.unitStats.AttackRange)
             {
                 Attack(i);
             }
@@ -85,7 +86,7 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        player[i].TakeDamage(EnemyDamage);
+        player[i].TakeDamage(unit.unitStats.Attack);
         timeSinceLastAttack = 0;
         myAnimation.SetBool("Attack", true);
     }
@@ -95,7 +96,7 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(
             transform.position,
             player[i].transform.position,
-            Time.deltaTime * speed
+            Time.deltaTime * unit.unitStats.MovingSpeed
         );
     }
 

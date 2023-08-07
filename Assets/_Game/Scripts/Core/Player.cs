@@ -1,8 +1,6 @@
 using System.Collections;
-using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -69,13 +67,13 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (enemy[i] is not null && enemy[i].health <= 0)
+        if (enemy[i] is not null && enemy[i].unit.unitStats.Health <= 0)
         {
             myAnimation.SetBool("Attack", false);
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health = Mathf.Max(health - damage, 0);
 
