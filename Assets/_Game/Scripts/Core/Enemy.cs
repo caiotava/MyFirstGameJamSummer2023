@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private Unit unit;
+
     public bool isChasing;
     public float speed = 2f;
     public float isInRange = 2f;
@@ -66,7 +68,7 @@ public class Enemy : MonoBehaviour
                 Attack(i);
             }
 
-            if (player[i].health == 0)
+            if (player[i].unit.unitStats.Health == 0)
             {
                 myAnimation.SetBool("Attack", false);
             }

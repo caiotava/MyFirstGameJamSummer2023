@@ -1,23 +1,24 @@
 using System.Collections;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    public float Range = 2f;
-    public int PlayerDamage = 5;
-    public float timeBetweenAttacks = 1f;
-    public float health = 100;
+    [SerializeField] public Unit unit;
+
+    private float health;
+    private float timeSinceLastAttack;
+
     private Enemy[] enemy;
     private Animator myAnimation;
 
-    private float timeSinceLastAttack;
-
     // Start is called before the first frame update
-    public void Awake()
+    public void Start()
     {
         myAnimation = GetComponent<Animator>();
+        health = unit.unitStats.Health;
     }
 
     // Update is called once per frame
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, Range);
+        Gizmos.DrawWireSphere(transform.position, unit.unitStats.AttackRange);
     }
 
     private IEnumerator EnemyComponent()
@@ -57,12 +58,13 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (timeSinceLastAttack > timeBetweenAttacks)
+        if (timeSinceLastAttack > unit.unitStats.AttackSpeed)
         {
-            if (enemy[i] is not null && Vector2.Distance(transform.position, enemy[i].transform.position) <= Range)
+            if (enemy[i] is not null && Vector2.Distance(transform.position, enemy[i].transform.position) <=
+                unit.unitStats.AttackRange)
             {
                 myAnimation.SetBool("Attack", true);
-                enemy[i].GiveDamage(PlayerDamage);
+                enemy[i].GiveDamage(unit.unitStats.Attack);
                 timeSinceLastAttack = 0;
             }
         }
@@ -76,9 +78,13 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health = Mathf.Max(health - damage, 0);
-        if (health == 0)
+
+        if (health != 0)
         {
-            Destroy(gameObject);
+            return;
         }
+
+        unit.OnUnitKill.Invoke(unit.unitStats);
+        Destroy(gameObject);
     }
 }

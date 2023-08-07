@@ -8,8 +8,9 @@ public class PlayerUnitsManager : MonoBehaviour
     [SerializeField] private List<UnitStatsComponent> playerSpawnPoints;
     [SerializeField] private uint maxUnitsPerType = 4;
 
-    public void SpawnPlayerUnities(Dictionary<UnitStats, uint> unities)
+    public void SpawnPlayerUnities(ResourceManager resourceManager)
     {
+        var unities = resourceManager.TotalSupplyByUnitStats;
         foreach (var unit in playerSpawnPoints)
         {
             if (!unities.ContainsKey(unit.UnitStatsType))
@@ -22,12 +23,15 @@ public class PlayerUnitsManager : MonoBehaviour
 
             for (var x = 0; x < maxUnities; x++)
             {
-                Instantiate(
-                    unit.UnitStatsType.unitPrefab,
+                var newUnit = Instantiate(
+                    unit.UnitStatsType.unitObject,
                     position.transform.position,
                     Quaternion.identity,
                     playerUnitsGroup.transform
                 );
+
+                newUnit.InitializeUnitStats(unit.UnitStatsType);
+                newUnit.OnUnitKill.AddListener(resourceManager.OnUnitKill);
             }
         }
     }

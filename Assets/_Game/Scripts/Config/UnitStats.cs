@@ -9,9 +9,10 @@ public class UnitStats : ScriptableObject
     public float BuildTime;
     public float Health;
     public float Attack;
-    public float Defense;
+    public float AttackRange;
     public float AttackSpeed;
+    public float Defense;
     public uint Supply;
     public Sprite Image;
-    public GameObject unitPrefab;
+    public Unit unitObject;
 }

@@ -23,7 +23,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
 
             var position = spawnPoints[Random.Range(0, spawnPoints.Count - 1)];
-            Instantiate(unitEnemy.unitPrefab, position.transform.position, Quaternion.identity, enemiesGroup.transform);
+            Instantiate(unitEnemy.unitObject, position.transform.position, Quaternion.identity, enemiesGroup.transform);
         }
     }
 

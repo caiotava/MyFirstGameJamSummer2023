@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1915445792751297731}
   - component: {fileID: 2944588830680855172}
   - component: {fileID: 7491937938181330315}
+  - component: {fileID: -6893478972681923019}
   - component: {fileID: 5958215906080090796}
   - component: {fileID: 620879863161728379}
   m_Layer: 0
@@ -121,11 +122,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 013c5dc75c914114cb271f816ce6e987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ischasing: 0
+  unit: {fileID: -6893478972681923019}
+  isChasing: 0
   speed: 1
   isInRange: 1.09
   health: 100
-  EnemyDamage: 5
+  EnemyDamage: 20
+--- !u!114 &-6893478972681923019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9123476737414042338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f472d14a3767f439e06b1371b5a468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnUnitKill:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &5958215906080090796
 Rigidbody2D:
   serializedVersion: 4

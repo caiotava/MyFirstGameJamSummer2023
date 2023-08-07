@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        if (Vector2.Distance(transform.position, enemy[i].transform.position) <= player.Range &&
+        if (Vector2.Distance(transform.position, enemy[i].transform.position) <= player.unit.unitStats.AttackRange &&
             nextFireTime <= Time.time)
         {
             var bullet = Instantiate(Prefab, transform.position, Quaternion.identity);

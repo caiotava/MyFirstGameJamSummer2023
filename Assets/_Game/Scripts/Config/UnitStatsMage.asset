@@ -18,8 +18,10 @@ MonoBehaviour:
   BuildTime: 2
   Health: 250
   Attack: 55
-  Defense: 10
+  AttackRange: 2
   AttackSpeed: 6.4
+  Defense: 10
   Supply: 5
   Image: {fileID: 21300000, guid: 5ec719dc671ac9140830a3503ea65cd1, type: 3}
+  unitObject: {fileID: -5152139321383813356, guid: 74d54c775a333d74999e009611b93ae3, type: 3}
   unitPrefab: {fileID: 7530586985014592609, guid: 74d54c775a333d74999e009611b93ae3, type: 3}

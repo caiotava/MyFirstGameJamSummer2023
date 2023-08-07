@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5976820828130039407}
   - component: {fileID: 7192030851824225831}
   - component: {fileID: 7019725635045701418}
+  - component: {fileID: -5152139321383813356}
   - component: {fileID: 4970980453296734786}
   - component: {fileID: 7882144094673801345}
   m_Layer: 0
@@ -123,9 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d574d8208a5d1d439c6227f01a58d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 6
-  PlayerDamage: 20
-  timeBetweenattacks: 3.5
+  unit: {fileID: -5152139321383813356}
+  range: 2
+  playerDamage: 5
+  timeBetweenAttacks: 1
   health: 10000
 --- !u!114 &7019725635045701418
 MonoBehaviour:
@@ -142,6 +144,18 @@ MonoBehaviour:
   Prefab: {fileID: 1418475511506330247, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
   fireRate: 2.9
   DestroyTime: 2
+--- !u!114 &-5152139321383813356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530586985014592609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f472d14a3767f439e06b1371b5a468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &4970980453296734786
 Rigidbody2D:
   serializedVersion: 4

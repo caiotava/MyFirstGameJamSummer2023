@@ -18,8 +18,10 @@ MonoBehaviour:
   BuildTime: 0
   Health: 0
   Attack: 5
-  Defense: 4
+  AttackRange: 0
   AttackSpeed: 3
+  Defense: 4
   Supply: 0
   Image: {fileID: 0}
+  unitObject: {fileID: -6893478972681923019, guid: 4a362e6b7cbefb445800df10a90c4ca7, type: 3}
   unitPrefab: {fileID: 9123476737414042338, guid: 4a362e6b7cbefb445800df10a90c4ca7, type: 3}

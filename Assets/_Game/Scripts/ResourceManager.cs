@@ -115,6 +115,14 @@ public class ResourceManager : MonoBehaviour
         Debug.Log($"not enough resources {unitStats.Image.name}");
     }
 
+    public void OnUnitKill(UnitStats unitStats)
+    {
+        TotalSupplyByUnitStats.TryGetValue(unitStats, out var totalUnitsByType);
+        TotalSupplyByUnitStats[unitStats] = totalUnitsByType - 1;
+
+        RefreshUIControls();
+    }
+
     private uint totalSupply()
     {
         uint total = 0;

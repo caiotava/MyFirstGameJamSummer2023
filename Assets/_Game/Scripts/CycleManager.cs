@@ -37,7 +37,7 @@ public class CycleManager : MonoBehaviour
         timerDisplay.OnTimerEnd.AddListener(OnEndOfCycleBattle);
 
         SetActiveBuildControls(false);
-        playerUnitsManager.SpawnPlayerUnities(resourceManager.TotalSupplyByUnitStats);
+        playerUnitsManager.SpawnPlayerUnities(resourceManager);
         spawnManager.StartSpawn();
     }
 
