@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
             var unit = Instantiate(unitEnemy.unitObject, position.transform.position, Quaternion.identity,
                 enemiesGroup.transform);
 
-            unit.InitializeUnitStats(unitEnemy.unitObject.unitStats);
+            unit.InitializeUnitStats(unitEnemy);
         }
     }
 

@@ -77,6 +77,8 @@ public class Player : MonoBehaviour
     {
         health = Mathf.Max(health - damage, 0);
 
+        unit.OnUniHit.Invoke(unit.unitStats, health);
+
         if (health != 0)
         {
             return;

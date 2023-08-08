@@ -53,23 +53,18 @@ public class Enemy : MonoBehaviour
     public void Chase(int i)
     {
         {
-            if (player[i] is null)
-            {
-                return;
-            }
-
-            if (Vector2.Distance(transform.position, player[i].transform.position) > unit.unitStats.AttackRange)
+            if (player[i] is not null && Vector2.Distance(transform.position, player[i].transform.position) > unit.unitStats.AttackRange)
             {
                 MoveToPlayer(i);
                 myAnimation.SetBool("walk", true);
             }
 
-            if (Vector2.Distance(transform.position, player[i].transform.position) < unit.unitStats.AttackRange)
+            if (player[i] is not null && Vector2.Distance(transform.position, player[i].transform.position) < unit.unitStats.AttackRange)
             {
                 Attack(i);
             }
 
-            if (player[i].unit.unitStats.Health == 0)
+            if (player[i] is not null && player[i].unit.unitStats.Health == 0)
             {
                 myAnimation.SetBool("Attack", false);
             }
@@ -103,6 +98,8 @@ public class Enemy : MonoBehaviour
     public void GiveDamage(float damage)
     {
         health = Mathf.Max(health - damage, 0);
+        unit.OnUniHit.Invoke(unit.unitStats, health);
+        
         if (health == 0)
         {
             Destroy(gameObject);

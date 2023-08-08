@@ -25,8 +25,8 @@ public class BulletTarget : MonoBehaviour
             if (enemy[i] is null) return;
             if (player is null) return;
             targetpos = enemy[i].transform.position;
-            var direction = targetpos - player.transform.position;
-            rb.velocity = new Vector2(direction.x, direction.y) * force;
+            var direction = targetpos - player?.transform?.position;
+            rb.velocity = new Vector2(direction.Value.x, direction.Value.y) * force;
         }
     }
 }
