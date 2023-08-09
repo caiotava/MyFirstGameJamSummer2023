@@ -7,6 +7,7 @@ public class PlayerUnitsManager : MonoBehaviour
     [SerializeField] private GameObject playerUnitsGroup;
     [SerializeField] private List<UnitStatsComponent> playerSpawnPoints;
     [SerializeField] private uint maxUnitsPerType = 4;
+    [SerializeField] private SpawnManager spawnManager;
 
     public void SpawnPlayerUnities(ResourceManager resourceManager)
     {
@@ -32,6 +33,7 @@ public class PlayerUnitsManager : MonoBehaviour
 
                 newUnit.InitializeUnitStats(unit.UnitStatsType);
                 newUnit.OnUnitKill.AddListener(resourceManager.OnUnitKill);
+                newUnit.GetComponent<Player>().spawnManager = spawnManager;
             }
         }
     }

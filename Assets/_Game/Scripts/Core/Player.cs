@@ -6,10 +6,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] public Unit unit;
 
+    [SerializeField] public SpawnManager spawnManager;
+
     private float health;
     private float timeSinceLastAttack;
 
-    private Enemy[] enemy;
+    private Enemy[] enemies;
     private Animator myAnimation;
 
     // Start is called before the first frame update
@@ -22,52 +24,27 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        StartCoroutine(EnemyComponent());
         timeSinceLastAttack += Time.deltaTime;
-        if (enemy == null)
-        {
-            return;
-        }
 
-        for (var i = 0; i < enemy.Count(); i++)
+        foreach (var enemy in spawnManager.GetEnemies())
         {
-            PlayerAttack(i);
+            PlayerAttack(enemy);
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void PlayerAttack(Enemy enemy)
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, unit.unitStats.AttackRange);
-    }
-
-    private IEnumerator EnemyComponent()
-    {
-        yield return new WaitForSeconds(2);
-        enemy = FindObjectsOfType<Enemy>();
-        yield return new WaitForSeconds(3);
-        StartCoroutine(EnemyComponent());
-    }
-
-    private void PlayerAttack(int i)
-    {
-        if (enemy is null)
-        {
-            return;
-        }
-
         if (timeSinceLastAttack > unit.unitStats.AttackSpeed)
         {
-            if (enemy[i] is not null && Vector2.Distance(transform.position, enemy[i].transform.position) <=
-                unit.unitStats.AttackRange)
+            if (Vector2.Distance(transform.position, enemy.transform.position) <= unit.unitStats.AttackRange)
             {
                 myAnimation.SetBool("Attack", true);
-                enemy[i].GiveDamage(unit.unitStats.Attack);
+                enemy.GiveDamage(unit.unitStats.Attack);
                 timeSinceLastAttack = 0;
             }
         }
 
-        if (enemy[i] is not null && enemy[i].unit.unitStats.Health <= 0)
+        if (enemy.unit.unitStats.Health <= 0)
         {
             myAnimation.SetBool("Attack", false);
         }
@@ -86,5 +63,11 @@ public class Player : MonoBehaviour
 
         unit.OnUnitKill.Invoke(unit.unitStats);
         Destroy(gameObject);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, unit.unitStats.AttackRange);
     }
 }

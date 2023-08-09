@@ -7091,6 +7091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUnitsManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5611192110312175425, guid: f38b549eee12f2a4dbb2eeea57469754, type: 3}
+      propertyPath: spawnManager
+      value: 
+      objectReference: {fileID: 2094031430}
     - target: {fileID: 7459963019362745288, guid: f38b549eee12f2a4dbb2eeea57469754, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

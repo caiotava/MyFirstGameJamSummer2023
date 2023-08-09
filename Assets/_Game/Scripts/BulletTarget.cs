@@ -5,7 +5,6 @@ public class BulletTarget : MonoBehaviour
 {
     public float force = 5f;
 
-    private Enemy[] enemy;
     private Player player;
     private Rigidbody2D rb;
     private Vector3 targetpos;
@@ -19,12 +18,10 @@ public class BulletTarget : MonoBehaviour
 
     public void Update()
     {
-        enemy = FindObjectsOfType<Enemy>();
-        for (var i = 0; i < enemy.Count(); i++)
+        foreach (var enemy in FindObjectsOfType<Enemy>())
         {
-            if (enemy[i] is null) return;
             if (player is null) return;
-            targetpos = enemy[i].transform.position;
+            targetpos = enemy.transform.position;
             var direction = targetpos - player?.transform?.position;
             rb.velocity = new Vector2(direction.Value.x, direction.Value.y) * force;
         }

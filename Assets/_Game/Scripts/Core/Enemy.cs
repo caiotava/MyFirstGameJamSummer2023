@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
 
     public bool isChasing;
     private Animator myAnimation;
-    private Player[] player;
     private Rigidbody2D rb;
 
     private float health = 100;
@@ -19,7 +18,6 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         myAnimation = GetComponent<Animator>();
-        player = FindObjectsOfType<Player>();
         rb = GetComponent<Rigidbody2D>();
 
         health = unit.unitStats.Health;
@@ -29,17 +27,10 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         timeSinceLastAttack += Time.deltaTime;
-        if (player == null)
-        {
-            return;
-        }
 
-        for (var i = 0; i < player.Count(); i++)
+        foreach (var player in FindObjectsOfType<Player>())
         {
-            if (player != null)
-            {
-                Chase(i);
-            }
+            Chase(player);
         }
     }
 
@@ -50,28 +41,28 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void Chase(int i)
+    private void Chase(Player player)
     {
         {
-            if (player[i] is not null && Vector2.Distance(transform.position, player[i].transform.position) > unit.unitStats.AttackRange)
+            if (Vector2.Distance(transform.position, player.transform.position) > unit.unitStats.AttackRange)
             {
-                MoveToPlayer(i);
+                MoveToPlayer(player);
                 myAnimation.SetBool("walk", true);
             }
 
-            if (player[i] is not null && Vector2.Distance(transform.position, player[i].transform.position) < unit.unitStats.AttackRange)
+            if (Vector2.Distance(transform.position, player.transform.position) < unit.unitStats.AttackRange)
             {
-                Attack(i);
+                Attack(player);
             }
 
-            if (player[i] is not null && player[i].unit.unitStats.Health == 0)
+            if (player.unit.unitStats.Health == 0)
             {
                 myAnimation.SetBool("Attack", false);
             }
         }
     }
 
-    private void Attack(int i)
+    private void Attack(Player player)
     {
         myAnimation.SetBool("walk", false);
 
@@ -81,16 +72,16 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        player[i].TakeDamage(unit.unitStats.Attack);
+        player.TakeDamage(unit.unitStats.Attack);
         timeSinceLastAttack = 0;
         myAnimation.SetBool("Attack", true);
     }
 
-    private void MoveToPlayer(int i)
+    private void MoveToPlayer(Component player)
     {
         transform.position = Vector3.MoveTowards(
             transform.position,
-            player[i].transform.position,
+            player.transform.position,
             Time.deltaTime * unit.unitStats.MovingSpeed
         );
     }
@@ -99,7 +90,7 @@ public class Enemy : MonoBehaviour
     {
         health = Mathf.Max(health - damage, 0);
         unit.OnUniHit.Invoke(unit.unitStats, health);
-        
+
         if (health == 0)
         {
             Destroy(gameObject);

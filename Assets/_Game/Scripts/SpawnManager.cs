@@ -37,4 +37,16 @@ public class SpawnManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+
+    public List<Enemy> GetEnemies()
+    {
+        var enemies = new List<Enemy>();
+
+        foreach (Transform child in enemiesGroup.transform)
+        {
+            enemies.Add(child.GetComponent<Enemy>());
+        }
+
+        return enemies;
+    }
 }

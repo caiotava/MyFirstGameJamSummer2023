@@ -17,21 +17,18 @@ public class Projectile : MonoBehaviour
     public void FixedUpdate()
 
     {
-        enemy = FindObjectsOfType<Enemy>();
-        for (var i = 0; i < enemy.Length; i++) BulletInstantiate(i);
+        foreach (var enemy in FindObjectsOfType<Enemy>())
+        {
+            BulletInstantiate(enemy);
+        }
     }
 
-    public void BulletInstantiate(int i)
+    public void BulletInstantiate(Enemy enemy)
     {
-        if (enemy[i] is null)
-        {
-            return;
-        }
-
-        if (Vector2.Distance(transform.position, enemy[i].transform.position) <= player.unit.unitStats.AttackRange &&
+        if (Vector2.Distance(transform.position, enemy.transform.position) <= player.unit.unitStats.AttackRange &&
             nextFireTime <= Time.time)
         {
-            var bullet = Instantiate(Prefab, transform.position, Quaternion.identity);
+            var bullet = Instantiate(Prefab, transform.position, Quaternion.identity, this.transform);
             nextFireTime = Time.time + fireRate;
             Destroy(bullet, DestroyTime);
         }
