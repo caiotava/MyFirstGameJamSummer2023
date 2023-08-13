@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 7143148108456714767}
   - component: {fileID: 1915445792751297731}
   - component: {fileID: 2944588830680855172}
-  - component: {fileID: 7491937938181330315}
   - component: {fileID: -6893478972681923019}
   - component: {fileID: 5958215906080090796}
   - component: {fileID: 620879863161728379}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 9123476737414042338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.637004, y: 0.15969259, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5100905, y: 0.57627803, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -111,20 +110,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7491937938181330315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9123476737414042338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 013c5dc75c914114cb271f816ce6e987, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: {fileID: -6893478972681923019}
-  isChasing: 0
 --- !u!114 &-6893478972681923019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +122,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f472d14a3767f439e06b1371b5a468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1915445792751297731}
+  attackAnimation: {fileID: 2944588830680855172}
+  bulletPrefab: {fileID: 0}
+  allowChasing: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
   OnUnitKill:
     m_PersistentCalls:
       m_Calls: []
@@ -214,8 +206,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.119571686, y: -0.015178442}
-  m_Size: {x: 3.0452347, y: 3.4435816}
+  m_Offset: {x: 0.5340163, y: -0.077720776}
+  m_Size: {x: 1.4554282, y: 3.1621377}
   m_Direction: 0
 --- !u!1001 &2032359197403843930
 PrefabInstance:
@@ -317,9 +309,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2030583385085600579, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570034863546849857, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702230223229440080, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919875450490239823, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_Name
       value: CanvasHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8383221439490097099, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_AnchorMax.x

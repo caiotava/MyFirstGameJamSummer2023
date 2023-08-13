@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 2314100189339661410}
   - component: {fileID: 1566055079447157289}
   - component: {fileID: 1355692569701391760}
-  - component: {fileID: 986323707710273174}
   - component: {fileID: 4479437419770817357}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8343060297821045891}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.64, y: 0.4657, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6119266, y: 0.5842651, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -81,7 +80,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 843337f67a209404fb72fcee914bd61c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.97, y: 3.4}
@@ -122,8 +121,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.3088625, y: -0.042199302}
-  m_Size: {x: 2.2055545, y: 3.4843986}
+  m_Offset: {x: 0.4347057, y: -0.02816735}
+  m_Size: {x: 1.4150982, y: 3.1756961}
   m_Direction: 0
 --- !u!50 &1566055079447157289
 Rigidbody2D:
@@ -173,19 +172,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &986323707710273174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8343060297821045891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d574d8208a5d1d439c6227f01a58d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: {fileID: 4479437419770817357}
 --- !u!114 &4479437419770817357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f472d14a3767f439e06b1371b5a468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1721327164990556213}
+  attackAnimation: {fileID: 1355692569701391760}
+  bulletPrefab: {fileID: 0}
+  allowChasing: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
   OnUnitKill:
     m_PersistentCalls:
       m_Calls: []
@@ -304,9 +297,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2030583385085600579, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570034863546849857, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702230223229440080, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919875450490239823, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8383221439490097099, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_AnchorMax.x

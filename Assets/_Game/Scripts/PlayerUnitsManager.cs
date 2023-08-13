@@ -33,7 +33,6 @@ public class PlayerUnitsManager : MonoBehaviour
 
                 newUnit.InitializeUnitStats(unit.UnitStatsType);
                 newUnit.OnUnitKill.AddListener(resourceManager.OnUnitKill);
-                newUnit.GetComponent<Player>().spawnManager = spawnManager;
             }
         }
     }

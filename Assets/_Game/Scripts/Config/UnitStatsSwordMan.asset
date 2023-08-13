@@ -16,12 +16,14 @@ MonoBehaviour:
   MetalCost: 50
   WoodCost: 20
   BuildTime: 2
-  Health: 130
+  Health: 330
   Attack: 32
   AttackRange: 2
   AttackSpeed: 4.6
+  projectileSpeed: 0
+  ChaseRange: 2
   Defense: 15
+  MovingSpeed: 0
   Supply: 2
   Image: {fileID: 21300000, guid: 0ed50800e9874704b807d96dc01ea164, type: 3}
   unitObject: {fileID: 4479437419770817357, guid: dd158146cbd913045b6b241bb649ba03, type: 3}
-  unitPrefab: {fileID: 8343060297821045891, guid: dd158146cbd913045b6b241bb649ba03, type: 3}

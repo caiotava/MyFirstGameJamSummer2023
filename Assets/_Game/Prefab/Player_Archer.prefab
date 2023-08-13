@@ -11,12 +11,10 @@ GameObject:
   - component: {fileID: 8956662516602138863}
   - component: {fileID: 3144134286917890513}
   - component: {fileID: 6321245598064408353}
-  - component: {fileID: 2769848234794452949}
-  - component: {fileID: 6640559661889312794}
   - component: {fileID: -1973330718357089485}
   - component: {fileID: 342863902595328495}
   - component: {fileID: 4342924239047808655}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player_Archer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6082267176726764507}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.2028675, y: 0.0018249452, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6119266, y: 0.58426505, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -82,7 +80,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 33b12ce0097232148b804dba6c9d8ebe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.97, y: 3.4}
@@ -112,34 +110,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2769848234794452949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6082267176726764507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d574d8208a5d1d439c6227f01a58d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: {fileID: -1973330718357089485}
---- !u!114 &6640559661889312794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6082267176726764507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6844638c06a905144bdd058fa5fa0eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prefab: {fileID: 1682408311708078829, guid: b645d93c1a3b74d42afb7b1bc736da1c, type: 3}
-  fireRate: 2.5
-  DestroyTime: 1.4
 --- !u!114 &-1973330718357089485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +122,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f472d14a3767f439e06b1371b5a468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 3144134286917890513}
+  attackAnimation: {fileID: 6321245598064408353}
+  bulletPrefab: {fileID: -6569338675646596098, guid: b645d93c1a3b74d42afb7b1bc736da1c, type: 3}
+  allowChasing: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
   OnUnitKill:
     m_PersistentCalls:
       m_Calls: []
@@ -229,8 +206,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07485449, y: -0.028884122}
-  m_Size: {x: 2.298149, y: 3.272233}
+  m_Offset: {x: 0.20602223, y: -0.05830138}
+  m_Size: {x: 1.6465151, y: 3.3310685}
   m_Direction: 0
 --- !u!1001 &8760893237844525011
 PrefabInstance:
@@ -320,9 +297,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2030583385085600579, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570034863546849857, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702230223229440080, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919875450490239823, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_Name
       value: CanvasHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8383221439490097099, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_AnchorMax.x

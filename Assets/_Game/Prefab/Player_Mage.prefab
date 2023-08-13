@@ -11,14 +11,12 @@ GameObject:
   - component: {fileID: 7389969685647044381}
   - component: {fileID: 5768371543865413800}
   - component: {fileID: 5976820828130039407}
-  - component: {fileID: 7192030851824225831}
-  - component: {fileID: 7019725635045701418}
   - component: {fileID: -5152139321383813356}
   - component: {fileID: 4970980453296734786}
   - component: {fileID: 7882144094673801345}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player_Mage
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7530586985014592609}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.88, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5020405, y: 0.55243033, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -113,34 +111,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7192030851824225831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7530586985014592609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d574d8208a5d1d439c6227f01a58d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: {fileID: -5152139321383813356}
---- !u!114 &7019725635045701418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7530586985014592609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6844638c06a905144bdd058fa5fa0eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prefab: {fileID: 1418475511506330247, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
-  fireRate: 2.9
-  DestroyTime: 2
 --- !u!114 &-5152139321383813356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f472d14a3767f439e06b1371b5a468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 5768371543865413800}
+  attackAnimation: {fileID: 5976820828130039407}
+  bulletPrefab: {fileID: 7572318618365204428, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
+  allowChasing: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
   OnUnitKill:
     m_PersistentCalls:
       m_Calls: []
@@ -230,8 +207,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.73, y: 4.06}
+  m_Offset: {x: -0.24230278, y: -0.09783926}
+  m_Size: {x: 2.3454087, y: 3.8643222}
   m_Direction: 0
 --- !u!1001 &3025427357663876851
 PrefabInstance:
@@ -243,6 +220,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1418475511506330247, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
       propertyPath: m_Name
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418475511506330247, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
+      propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1418475511506330247, guid: f9edf1de472b7c24388fed4a6d450306, type: 3}
@@ -407,9 +388,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2030583385085600579, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570034863546849857, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702230223229440080, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919875450490239823, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_Name
       value: CanvasHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345578408700164454, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8383221439490097099, guid: a36d09669fd52f649b53e8b8cae9c47b, type: 3}
       propertyPath: m_AnchorMax.x

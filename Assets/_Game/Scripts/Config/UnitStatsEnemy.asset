@@ -16,10 +16,12 @@ MonoBehaviour:
   MetalCost: 0
   WoodCost: 0
   BuildTime: 0
-  Health: 100
-  Attack: 5
+  Health: 150
+  Attack: 15
   AttackRange: 2
   AttackSpeed: 1
+  projectileSpeed: 0
+  ChaseRange: 300
   Defense: 4
   MovingSpeed: 2
   Supply: 0

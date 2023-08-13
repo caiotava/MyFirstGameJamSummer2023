@@ -5,7 +5,6 @@ using UnityEngine.Events;
 public class BuildManager : MonoBehaviour
 {
     [SerializeField] private int QueueSizeLimit = 5;
-    [SerializeField] private int GlobalBuildLimit = 100;
     [SerializeField] private ResourceManager resourceManager;
 
     [SerializeField] private UnityEvent<UnitStats> OnBuildQueued = new();

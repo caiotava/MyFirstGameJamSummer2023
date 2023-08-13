@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -9,16 +11,26 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject enemiesGroup;
     [SerializeField] private float spawnIntervalMin;
     [SerializeField] private float spawnIntervalMax;
-    [SerializeField] private float maxEnemiesToSpawn = 10;
+    [SerializeField] private int initialEnemySpawn = 1;
+    [SerializeField] private int incrementalEnemySpawn = 2;
+    [SerializeField] private int maxEnemiesToSpawn = 10;
+
+    private int totalEnemiesToSpawn;
+
+    private void Start()
+    {
+        totalEnemiesToSpawn = initialEnemySpawn;
+    }
 
     public void StartSpawn()
     {
+        totalEnemiesToSpawn += Math.Min(totalEnemiesToSpawn * incrementalEnemySpawn, maxEnemiesToSpawn);
         StartCoroutine(spawnEnemyRountine());
     }
 
     private IEnumerator spawnEnemyRountine()
     {
-        while (enemiesGroup.transform.childCount <= maxEnemiesToSpawn)
+        while (enemiesGroup.transform.childCount <= totalEnemiesToSpawn)
         {
             yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
 
@@ -36,17 +48,5 @@ public class SpawnManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-    }
-
-    public List<Enemy> GetEnemies()
-    {
-        var enemies = new List<Enemy>();
-
-        foreach (Transform child in enemiesGroup.transform)
-        {
-            enemies.Add(child.GetComponent<Enemy>());
-        }
-
-        return enemies;
     }
 }
