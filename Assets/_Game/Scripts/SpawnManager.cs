@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
@@ -15,7 +16,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int incrementalEnemySpawn = 2;
     [SerializeField] private int maxEnemiesToSpawn = 10;
 
+    [SerializeField] private UnityEvent<int> OnStartToSpawn;
+    [SerializeField] public UnityEvent<Unit> OnUnitSpawn;
+
     private int totalEnemiesToSpawn;
+    private int enemiesCount;
 
     private void Start()
     {
@@ -24,21 +29,25 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawn()
     {
+        enemiesCount = 0;
         totalEnemiesToSpawn += Math.Min(totalEnemiesToSpawn * incrementalEnemySpawn, maxEnemiesToSpawn);
+        OnStartToSpawn.Invoke(totalEnemiesToSpawn);
         StartCoroutine(spawnEnemyRountine());
     }
 
     private IEnumerator spawnEnemyRountine()
     {
-        while (enemiesGroup.transform.childCount <= totalEnemiesToSpawn)
+        while (enemiesCount < totalEnemiesToSpawn)
         {
             yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
 
             var position = spawnPoints[Random.Range(0, spawnPoints.Count - 1)];
-            var unit = Instantiate(unitEnemy.unitObject, position.transform.position, Quaternion.identity,
+            Unit unit = Instantiate(unitEnemy.unitObject, position.transform.position, Quaternion.identity,
                 enemiesGroup.transform);
 
             unit.InitializeUnitStats(unitEnemy);
+            OnUnitSpawn.Invoke(unit);
+            enemiesCount++;
         }
     }
 

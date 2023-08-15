@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerUnitsManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerUnitsManager : MonoBehaviour
     [SerializeField] private List<UnitStatsComponent> playerSpawnPoints;
     [SerializeField] private uint maxUnitsPerType = 4;
     [SerializeField] private SpawnManager spawnManager;
+    [SerializeField] private UnityEvent<List<Unit>> OnFinishSpawn;
 
     public void SpawnPlayerUnities(ResourceManager resourceManager)
     {
@@ -35,6 +37,20 @@ public class PlayerUnitsManager : MonoBehaviour
                 newUnit.OnUnitKill.AddListener(resourceManager.OnUnitKill);
             }
         }
+
+        OnFinishSpawn.Invoke(GetUnits());
+    }
+
+    private List<Unit> GetUnits()
+    {
+        var units = new List<Unit>();
+
+        foreach (Transform child in playerUnitsGroup.transform)
+        {
+            units.Add(child.GetComponent<Unit>());
+        }
+
+        return units;
     }
 
     public void ClearAllUnities()

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -18,11 +19,14 @@ public class Unit : MonoBehaviour
     private Unit targetUnit;
     private bool isChasing;
     private float timeSinceLastAttack;
+    private bool isMelee;
+    private bool hasBeenChased;
 
     public void InitializeUnitStats(UnitStats stats)
     {
         unitStats = stats;
         health = unitStats.Health;
+        isMelee = bulletPrefab is null;
     }
 
     private void Update()
@@ -43,7 +47,7 @@ public class Unit : MonoBehaviour
 
     private bool findTarget()
     {
-        if (targetUnit is not null && !targetUnit.Equals(null))
+        if (targetUnit is not null && !targetUnit.Equals(null) && !isMelee)
         {
             return true;
         }
@@ -58,27 +62,41 @@ public class Unit : MonoBehaviour
             return false;
         }
 
-        targetUnit = hits[0].transform.GetComponent<Unit>();
-        if (targetUnit is null)
+        target = hits[0];
+        targetUnit = target.transform.GetComponent<Unit>();
+        foreach (var hit in hits)
+        {
+            targetUnit = hit.transform.GetComponent<Unit>();
+
+            if (targetUnit.hasBeenChased)
+            {
+                continue;
+            }
+
+            target = hit;
+            break;
+        }
+
+        if (targetUnit == null)
         {
             return false;
         }
 
-        target = hits[0];
+        targetUnit.hasBeenChased = true;
         spriteRenderer.flipX = transform.position.x < target.transform.position.x;
         return true;
     }
 
     private void chase()
     {
-        if (allowChasing && Vector2.Distance(transform.position, target.transform.position) > unitStats.AttackRange)
+        if (allowChasing && Vector2.Distance(transform.position, targetUnit.transform.position) > unitStats.AttackRange)
         {
             MoveToTarget();
             attackAnimation.SetBool("walk", true);
             return;
         }
 
-        if (Vector2.Distance(transform.position, target.transform.position) < unitStats.AttackRange)
+        if (Vector2.Distance(transform.position, targetUnit.transform.position) < unitStats.AttackRange)
         {
             unitAttack();
             return;
@@ -109,7 +127,7 @@ public class Unit : MonoBehaviour
         attackAnimation.SetBool("Attack", true);
         attackAnimation.enabled = true;
 
-        if (bulletPrefab is not null)
+        if (!isMelee)
         {
             var project = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform);
             project.Initialize(this, targetUnit);

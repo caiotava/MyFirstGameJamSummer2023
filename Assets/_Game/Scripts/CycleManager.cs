@@ -14,8 +14,12 @@ public class CycleManager : MonoBehaviour
     [SerializeField] private PlayerUnitsManager playerUnitsManager;
     [SerializeField] private ResourceManager resourceManager;
 
+    private int totalUnitsPlayer;
+    private int totalUnitsEnemy;
+
     public void Start()
     {
+        spawnManager.OnUnitSpawn.AddListener(OnEnemySpawn);
         StartNewCycleBuild();
     }
 
@@ -56,6 +60,44 @@ public class CycleManager : MonoBehaviour
         spawnManager.StopAllCoroutines();
 
         StartNewCycleBuild();
+    }
+
+    public void OnFinishToSpawnPlayerUnits(List<Unit> units)
+    {
+        totalUnitsPlayer = units.Count;
+        foreach (var unit in units)
+        {
+            unit.OnUnitKill.AddListener(onPlayerUnitKill);
+        }
+    }
+
+    public void OnStartToSpawnEnemies(int total)
+    {
+        totalUnitsEnemy = total;
+    }
+
+    public void OnEnemySpawn(Unit unit)
+    {
+        unit.OnUnitKill.AddListener(OnEnemyUnitKill);
+    }
+
+    public void OnEnemyUnitKill(UnitStats unitStats)
+    {
+        totalUnitsEnemy--;
+        if (totalUnitsEnemy <= 0)
+        {
+            OnEndOfCycleBattle();
+        }
+    }
+
+    private void onPlayerUnitKill(UnitStats unitStats)
+    {
+        totalUnitsPlayer--;
+
+        if (totalUnitsPlayer <= 0)
+        {
+            OnEndOfCycleBattle();
+        }
     }
 
     private void SetActiveBuildControls(bool active)

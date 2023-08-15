@@ -17,6 +17,7 @@ public class TimerDisplay : MonoBehaviour
     {
         remainDuration = 0;
         duration = seconds;
+        StopAllCoroutines();
         StartCoroutine(TimerRoutine());
     }
 
