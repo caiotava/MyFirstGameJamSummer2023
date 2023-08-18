@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private BulletTarget bulletPrefab;
     [SerializeField] private bool allowChasing = false;
     [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private GameObject selectedSprite;
     public UnitStats unitStats { get; private set; }
     public UnityEvent<UnitStats> OnUnitKill;
     public UnityEvent<UnitStats, float> OnUniHit;
@@ -20,25 +21,37 @@ public class Unit : MonoBehaviour
     private bool isChasing;
     private float timeSinceLastAttack;
     private bool isMelee;
-    private bool hasBeenChased;
+    private Vector3 movePosition;
 
     public void InitializeUnitStats(UnitStats stats)
     {
         unitStats = stats;
         health = unitStats.Health;
         isMelee = bulletPrefab is null;
+        SetSelected(false);
+        movePosition = transform.position;
     }
 
     private void Update()
     {
-        if (tag == "Player")
+        if (movePosition != transform.position)
         {
-            var a = attackAnimation.enabled;
+            attackAnimation.SetBool("Walk", true);
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                movePosition,
+                Time.deltaTime * unitStats.MovingSpeed
+            );
+
+            spriteRenderer.flipX = transform.position.x < movePosition.x;
+            return;
         }
+
+        attackAnimation.SetBool("Walk", false);
 
         if (!findTarget())
         {
-            attackAnimation.enabled = false;
+            attackAnimation.SetBool("Idle", true);
             return;
         }
 
@@ -47,7 +60,7 @@ public class Unit : MonoBehaviour
 
     private bool findTarget()
     {
-        if (targetUnit is not null && !targetUnit.Equals(null) && !isMelee)
+        if (targetUnit != null && !isMelee)
         {
             return true;
         }
@@ -56,7 +69,6 @@ public class Unit : MonoBehaviour
         var hits = Physics2D.CircleCastAll(pos, unitStats.ChaseRange, pos, 0.0f, targetLayer);
 
         isChasing = hits.Length > 0;
-
         if (!isChasing)
         {
             return false;
@@ -64,25 +76,11 @@ public class Unit : MonoBehaviour
 
         target = hits[0];
         targetUnit = target.transform.GetComponent<Unit>();
-        foreach (var hit in hits)
-        {
-            targetUnit = hit.transform.GetComponent<Unit>();
-
-            if (targetUnit.hasBeenChased)
-            {
-                continue;
-            }
-
-            target = hit;
-            break;
-        }
-
         if (targetUnit == null)
         {
             return false;
         }
 
-        targetUnit.hasBeenChased = true;
         spriteRenderer.flipX = transform.position.x < target.transform.position.x;
         return true;
     }
@@ -91,8 +89,7 @@ public class Unit : MonoBehaviour
     {
         if (allowChasing && Vector2.Distance(transform.position, targetUnit.transform.position) > unitStats.AttackRange)
         {
-            MoveToTarget();
-            attackAnimation.SetBool("walk", true);
+            movePosition = target.transform.position;
             return;
         }
 
@@ -104,15 +101,6 @@ public class Unit : MonoBehaviour
 
         targetUnit = null;
         target = new RaycastHit2D();
-    }
-
-    private void MoveToTarget()
-    {
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            target.transform.position,
-            Time.deltaTime * unitStats.MovingSpeed
-        );
     }
 
     private void unitAttack()
@@ -145,12 +133,25 @@ public class Unit : MonoBehaviour
         health = Mathf.Max(health - damage, 0);
         OnUniHit.Invoke(unitStats, health);
 
-        if (!(health <= 0))
+        if (health > 0)
         {
             return;
         }
 
         Destroy(gameObject);
         OnUnitKill.Invoke(unitStats);
+    }
+
+    public void SetSelected(bool isSelected)
+    {
+        if (selectedSprite != null)
+        {
+            selectedSprite.SetActive(isSelected);
+        }
+    }
+
+    public void SetMovePosition(Vector3 position)
+    {
+        movePosition = position;
     }
 }

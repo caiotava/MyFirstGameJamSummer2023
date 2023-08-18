@@ -13,6 +13,7 @@ public class CycleManager : MonoBehaviour
     [SerializeField] private SpawnManager spawnManager;
     [SerializeField] private PlayerUnitsManager playerUnitsManager;
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private GameControl gameControl;
 
     private int totalUnitsPlayer;
     private int totalUnitsEnemy;
@@ -32,6 +33,7 @@ public class CycleManager : MonoBehaviour
         harvestManager.StartHarvest();
 
         SetActiveBuildControls(true);
+        gameControl.enabled = true;
     }
 
     public void StartNewCycleBattle()
@@ -41,6 +43,7 @@ public class CycleManager : MonoBehaviour
         timerDisplay.OnTimerEnd.AddListener(OnEndOfCycleBattle);
 
         SetActiveBuildControls(false);
+        gameControl.enabled = true;
         playerUnitsManager.SpawnPlayerUnities(resourceManager);
         spawnManager.StartSpawn();
     }
@@ -50,6 +53,7 @@ public class CycleManager : MonoBehaviour
         harvestManager.StopHarvest();
         buildManager.StopAllBuildQueues();
 
+        gameControl.enabled = false;
         StartNewCycleBattle();
     }
 
@@ -59,6 +63,7 @@ public class CycleManager : MonoBehaviour
         spawnManager.ClearAllUnities();
         spawnManager.StopAllCoroutines();
 
+        gameControl.enabled = false;
         StartNewCycleBuild();
     }
 

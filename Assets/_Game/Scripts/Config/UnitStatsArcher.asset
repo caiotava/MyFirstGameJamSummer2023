@@ -23,7 +23,7 @@ MonoBehaviour:
   projectileSpeed: 900
   ChaseRange: 40
   Defense: 10
-  MovingSpeed: 0
+  MovingSpeed: 2
   Supply: 4
   Image: {fileID: 21300000, guid: 330bdd51feecc6e4ebd5e39493be31b3, type: 3}
   unitObject: {fileID: -1973330718357089485, guid: 0fc8af3ad8df81d4aa2ee5ffb6d25c58, type: 3}
