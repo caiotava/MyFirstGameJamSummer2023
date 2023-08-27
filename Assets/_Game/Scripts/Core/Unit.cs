@@ -1,9 +1,5 @@
-using System;
-using Unity.VisualScripting;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class Unit : MonoBehaviour
 {
