@@ -1213,6 +1213,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578005897}
   m_CullTransparentMesh: 1
+--- !u!1 &602845353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1922678672544754064, guid: 1fa496611e188744381085903bbf3b16, type: 3}
+  m_PrefabInstance: {fileID: 1343223950415684156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &662121339
 GameObject:
   m_ObjectHideFlags: 0
@@ -7568,8 +7573,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758055185360211018, guid: 1fa496611e188744381085903bbf3b16, type: 3}
       propertyPath: incrementalEnemySpawn
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4758055185360211018, guid: 1fa496611e188744381085903bbf3b16, type: 3}
+      propertyPath: spawnPoints.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758055185360211018, guid: 1fa496611e188744381085903bbf3b16, type: 3}
+      propertyPath: spawnPoints.Array.data[8]
+      value: 
+      objectReference: {fileID: 602845353}
     - target: {fileID: 4758055185360211018, guid: 1fa496611e188744381085903bbf3b16, type: 3}
       propertyPath: OnUnitSpawn.m_PersistentCalls.m_Calls.Array.size
       value: 0

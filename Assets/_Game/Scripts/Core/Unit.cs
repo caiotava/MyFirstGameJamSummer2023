@@ -1,4 +1,6 @@
+using System;
 using Unity.VisualScripting;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -18,10 +20,25 @@ public class Unit : MonoBehaviour
     private float health;
     private RaycastHit2D target;
     private Unit targetUnit;
+    private bool isMoving;
     private bool isChasing;
-    private float timeSinceLastAttack;
     private bool isMelee;
+    private float timeSinceLastAttack;
     private Vector3 movePosition;
+
+    private LineRenderer line;
+
+    void StartLine()
+    {
+        line = gameObject.AddComponent<LineRenderer>(); // Add the LineRenderer
+        line.material = new Material(Shader.Find("Sprites/Default")); // Set the material (optional)
+        line.startColor = Color.red; // Set start color
+        line.endColor = Color.blue; // Set end color
+        line.startWidth = 0.1f; // Set start width
+        line.endWidth = 0.1f; // Set end width
+        line.positionCount = 2; // Set the number of points to the LineRenderer
+        line.enabled = false;
+    }
 
     public void InitializeUnitStats(UnitStats stats)
     {
@@ -30,24 +47,41 @@ public class Unit : MonoBehaviour
         isMelee = bulletPrefab is null;
         SetSelected(false);
         movePosition = transform.position;
+
+        StartLine();
     }
 
     private void Update()
     {
-        if (movePosition != transform.position)
+        line.enabled = false;
+
+#if UNITY_EDITOR
+        if (targetUnit != null && allowChasing)
         {
-            attackAnimation.SetBool("Walk", true);
+            line.enabled = true;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, targetUnit.transform.position);
+        }
+#endif
+
+        if (allowChasing && findTarget())
+        {
+            chase();
+        }
+
+        var newPos = new Vector3(movePosition.x, movePosition.y, transform.position.y);
+        isMoving = newPos != transform.position;
+        attackAnimation.SetBool("Walk", isMoving);
+        if (isMoving)
+        {
             transform.position = Vector3.MoveTowards(
                 transform.position,
-                movePosition,
+                newPos,
                 Time.deltaTime * unitStats.MovingSpeed
             );
 
-            spriteRenderer.flipX = transform.position.x < movePosition.x;
             return;
         }
-
-        attackAnimation.SetBool("Walk", false);
 
         if (!findTarget())
         {
@@ -58,6 +92,18 @@ public class Unit : MonoBehaviour
         chase();
     }
 
+    private void LateUpdate()
+    {
+        if (isMoving)
+        {
+            spriteRenderer.flipX = transform.position.x < movePosition.x;
+        }
+        else if (targetUnit != null)
+        {
+            spriteRenderer.flipX = transform.position.x < targetUnit.transform.position.x;
+        }
+    }
+
     private bool findTarget()
     {
         if (targetUnit != null && !isMelee)
@@ -66,7 +112,19 @@ public class Unit : MonoBehaviour
         }
 
         var pos = (Vector2)transform.position;
-        var hits = Physics2D.CircleCastAll(pos, unitStats.ChaseRange, pos, 0.0f, targetLayer);
+        var hits = Physics2D.CircleCastAll(pos, unitStats.ChaseRange, Vector2.zero, Mathf.Infinity, targetLayer);
+
+        var minDistance = Mathf.Infinity;
+        // Iterate over all the hit objects and find the closest
+        foreach (var hit in hits)
+        {
+            var distance = (hit.point - (Vector2)transform.position).magnitude;
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                target = hit;
+            }
+        }
 
         isChasing = hits.Length > 0;
         if (!isChasing)
@@ -74,14 +132,12 @@ public class Unit : MonoBehaviour
             return false;
         }
 
-        target = hits[0];
         targetUnit = target.transform.GetComponent<Unit>();
         if (targetUnit == null)
         {
             return false;
         }
 
-        spriteRenderer.flipX = transform.position.x < target.transform.position.x;
         return true;
     }
 
@@ -152,6 +208,8 @@ public class Unit : MonoBehaviour
 
     public void SetMovePosition(Vector3 position)
     {
-        movePosition = position;
+        movePosition = new Vector3(position.x, position.y, transform.position.z);
+        targetUnit = null;
+        target = new RaycastHit2D();
     }
 }
